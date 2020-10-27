@@ -1,0 +1,8 @@
+prefix=/home/ronnie7z/taskran/install
+
+Name: task_des
+Description: Description of task_des
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

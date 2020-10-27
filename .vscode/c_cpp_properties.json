@@ -1,0 +1,36 @@
+{
+    "configurations": [
+        {
+            "browse": {
+                "databaseFilename": "",
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "includePath": [
+                "/home/ronnie7z/MoveIt/devel/include/**",
+                "/opt/ros/melodic/include/**",
+                "/home/ronnie7z/MoveIt/src/moveit/moveit_planners/chomp/chomp_motion_planner/include/**",
+                "/home/ronnie7z/MoveIt/src/geometric_shapes/include/**",
+                "/home/ronnie7z/MoveIt/src/moveit_grasps/include/**",
+                "/home/ronnie7z/MoveIt/src/moveit/moveit_planners/chomp/chomp_interface/include/**",
+                "/home/ronnie7z/MoveIt/src/moveit/moveit_ros/benchmarks/include/**",
+                "/home/ronnie7z/MoveIt/src/moveit/moveit_plugins/moveit_ros_control_interface/include/**",
+                "/home/ronnie7z/MoveIt/src/moveit/moveit_ros/move_group/include/**",
+                "/home/ronnie7z/MoveIt/src/moveit/moveit_ros/occupancy_map_monitor/include/**",
+                "/home/ronnie7z/MoveIt/src/moveit/moveit_ros/robot_interaction/include/**",
+                "/home/ronnie7z/MoveIt/src/moveit/moveit_ros/moveit_servo/include/**",
+                "/home/ronnie7z/MoveIt/src/moveit/moveit_setup_assistant/include/**",
+                "/home/ronnie7z/MoveIt/src/moveit/moveit_plugins/moveit_simple_controller_manager/include/**",
+                "/home/ronnie7z/MoveIt/src/moveit_visual_tools/include/**",
+                "/home/ronnie7z/MoveIt/src/rviz_visual_tools/include/**",
+                "/home/ronnie7z/MoveIt/src/moveit/moveit_planners/sbpl/core/sbpl_interface/include/**",
+                "/usr/include/**"
+            ],
+            "name": "ROS",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++14"
+        }
+    ],
+    "version": 4
+}

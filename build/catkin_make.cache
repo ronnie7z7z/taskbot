@@ -1,0 +1,2 @@
+task_des
+-DCATKIN_DEVEL_PREFIX=/home/ronnie7z/taskran/devel -DCMAKE_INSTALL_PREFIX=/home/ronnie7z/taskran/install -G Unix Makefiles
