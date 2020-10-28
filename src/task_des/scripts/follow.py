@@ -78,9 +78,9 @@ class pid_solver:
     x,y,b,h = cv2.boundingRect(cnt)
 
     i = x+b/2
-    kp = 0.015
-    kd = 0.002
-    ki = 0.005
+    kp = 0.03
+    kd = 0.01
+    ki = 0.000
     outMin = -5
     outMax = 5
     iMin = -0.01

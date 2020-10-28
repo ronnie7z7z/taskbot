@@ -13,7 +13,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-            <box size="1 1 0.1"/>
+            <box size="1 1 0.05"/>
         </geometry>
         <material name="blue"/>
       </visual>
@@ -21,10 +21,52 @@
       <collision>
         <origin xyz="0 0 0" rpy="0.0 0.0 0.0"/>
         <geometry>
-            <box size="1 1 0.1"/>
+            <box size="1 1 0.05"/>
         </geometry>
       </collision>
   </link>
+
+  <joint name="joont0" type="prismatic">
+    <axis xyz="0 1 0"/>
+    <limit effort="1000" lower="-0.4" upper="0.4" velocity="1" />
+    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+    <parent link="base"/>
+    <child link="base1"/>
+  </joint>
+
+  <link name="base1">
+    <inertial>
+        <mass value="10"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
+    </inertial>
+    
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+          <box size="0.1 1 0.05"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0.0 0.0 0.0"/>
+      <geometry>
+          <box size="0.1 1 0.05"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <transmission name="trans_joont0">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joont0">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_joont0">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
 
   <link name="slider">
       <inertial>
@@ -49,20 +91,23 @@
       </collision>
   </link>
 
-  <joint name="joont" type="prismatic">
+
+
+  <joint name="joont1" type="prismatic">
     <axis xyz="0 1 0"/>
     <limit effort="1000" lower="-0.4" upper="0.4" velocity="1" />
-    <origin rpy="0 0 0" xyz="0 0 0.1" />
-    <parent link="base"/>
+    <origin rpy="0 0 0" xyz="0 0 0.075" />
+    <parent link="base1"/>
     <child link="slider"/>
   </joint>
 
-  <transmission name="trans_joont">
+
+  <transmission name="trans_joont1">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joont">
+    <joint name="joont1">
         <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
-    <actuator name="motor_joont">
+    <actuator name="motor_joont1">
         <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
         <mechanicalReduction>1</mechanicalReduction>
     </actuator>
@@ -96,4 +141,77 @@
     <child link="camera"/>
   </joint>
 
+  <!-- Now the 2nd Base + Ball description follows -->
+
+  <joint name="base2base" type="fixed">
+    <axis xyz="1 0 0"/>
+    <origin xyz="2 0 0" rpy="0 0 0"/>
+    <parent link="base"/>
+    <child link="base2"/>
+  </joint>
+
+  <link name="base2">
+    <inertial>
+        <mass value="10"/>
+        <origin xyz="0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
+    </inertial>
+    
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+          <box size="0.1 1 0.1"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0.0 0.0 0.0"/>
+      <geometry>
+          <box size="0.1 1 0.1"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="ball">
+    <inertial>
+        <mass value="2"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
+    </inertial>
+    
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="joont2" type="prismatic">
+    <axis xyz="0 1 0"/>
+    <limit effort="1000" lower="-0.4" upper="0.4" velocity="1" />
+    <origin rpy="0 0 0" xyz="0 0 0.1" />
+    <parent link="base2"/>
+    <child link="ball"/>
+  </joint>
+
+  <transmission name="trans_joont2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joont2">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor_joont2">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
 </robot>

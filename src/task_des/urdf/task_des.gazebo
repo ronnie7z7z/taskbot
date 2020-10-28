@@ -1,12 +1,24 @@
 <?xml version="1.0"?>
-<robot>
+<robot name="task_des" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <gazebo reference="base">
     <material>Gazebo/Blue</material>
   </gazebo>
 
+  <gazebo reference="base1">
+    <material>Gazebo/Green</material>
+  </gazebo>
+
+  <gazebo reference="base2">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
   <gazebo reference="slider">
     <material>Gazebo/Orange</material>
+  </gazebo>
+
+  <gazebo reference="ball">
+    <material>Gazebo/Red</material>
   </gazebo>
 
   <gazebo reference="camera">
