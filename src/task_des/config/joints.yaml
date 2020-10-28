@@ -12,7 +12,7 @@ joint0_position_controller:
 joint1_position_controller:
   type: effort_controllers/JointPositionController
   joint: joont1
-  pid: {p: 2000, i: 100, d: 500}
+  pid: {p: 2000, i: 1000, d: 500}
 
 joint2_position_controller:
   type: effort_controllers/JointPositionController

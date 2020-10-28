@@ -9,8 +9,12 @@ import cv2
 import numpy as np
 from std_msgs.msg import String
 from std_msgs.msg import Float64
+from sensor_msgs.msg import PointCloud2
+from sensor_msgs import point_cloud2
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
+
+cord=[0,0]
 
 class PID:
         
@@ -53,11 +57,14 @@ class PID:
 class pid_solver:
 
   def __init__(self):
-    self.data_pub = rospy.Publisher("task_des/joint1_position_controller/command", Float64, queue_size = 10)
+    self.datay_pub = rospy.Publisher("task_des/joint0_position_controller/command", Float64, queue_size = 10)
+    self.datax_pub = rospy.Publisher("task_des/joint1_position_controller/command", Float64, queue_size = 10)
     self.bridge = CvBridge()
-    self.image_sub = rospy.Subscriber("task_des/taskbot/camera/image_raw",Image,self.callback)
+    self.point_cloud = rospy.Subscriber("camera/depth/points", PointCloud2, self.callback2)
+    self.image_sub = rospy.Subscriber("/camera/color/image_raw",Image, self.callback1)
+    
 
-  def callback(self,data):
+  def callback1(self,data):
     try:
       cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
     except CvBridgeError as e:
@@ -77,9 +84,11 @@ class pid_solver:
     cnt, h, z = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
     x,y,b,h = cv2.boundingRect(cnt)
 
-    i = x+b/2
-    kp = 0.03
-    kd = 0.01
+    global cord
+    cord = [x+b/2,y+h/2]
+
+    kp = 0.007
+    kd = 0.001
     ki = 0.000
     outMin = -5
     outMax = 5
@@ -87,12 +96,34 @@ class pid_solver:
     iMax = 0.01
     
     pid = PID(kp, ki, kd, outMin, outMax, iMin, iMax)
+    output = pid.pidExecute(320 ,cord[0])
+    try:
+      self.datay_pub.publish(output)
+    except:
+      print("Error")
 
-    output = pid.pidExecute(400 ,i)
-
+  
+  def callback2(self,data):
+    i=0
+    for p in point_cloud2.read_points(data, field_names = ("x","y","z"), skip_nans=False):
+      if (i==(640*(cord[1]-1))+cord[0]):
+        x1,y1,z1 = p[0],p[1],p[2]
+        break
+      i+=1
+    
+    kp = 1.7
+    kd = 1
+    ki = 0.000
+    outMin = -5
+    outMax = 5
+    iMin = -0.01
+    iMax = 0.01
+    
+    pid = PID(kp, ki, kd, outMin, outMax, iMin, iMax)
+    output = -pid.pidExecute(1.9,z1)
 
     try:
-      self.data_pub.publish(output)
+      self.datax_pub.publish(output)
     except:
       print("Error")
 
